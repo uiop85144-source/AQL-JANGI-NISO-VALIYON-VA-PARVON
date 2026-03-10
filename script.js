@@ -49,8 +49,8 @@ document.getElementById("qnum2").innerText="Savol "+(q+1)
 document.getElementById("qtext1").innerText=data.question
 document.getElementById("qtext2").innerText=data.question
 
-document.getElementById("map1").src="images/"+data.battle+".jpg"
-document.getElementById("map2").src="images/"+data.battle+".jpg"
+document.getElementById("map1").src="images/"+data.battle+".png"
+document.getElementById("map2").src="images/"+data.battle+".png"
 
 let answers=[data.correct,...data.wrong]
 answers.sort(()=>Math.random()-0.5)
@@ -129,4 +129,5 @@ loadQuestion()
 loadQuestion()
 
 document.getElementById("bgmusic").volume=0.1
+
 document.getElementById("bgmusic").play()
