@@ -564,11 +564,11 @@
   </div>
 </div>
 
-<audio id="audioApplause" preload="auto" src="audio/applause.mp3"></audio>
-<audio id="audioBingo" preload="auto" src="audio/game-bonus.mp3"></audio>
+<audio id="audioApplause" preload="auto" src="audio/appalause.mp3"></audio>
 <audio id="audioVictory" preload="auto" src="audio/victory-male.mp3"></audio>
-<audio id="audioChicken" preload="auto" src="audio/you-win.mp3"></audio>
-<audio id="audioTryAgain" preload="auto" src="audio/try-again.mp3"></audio>
+<audio id="audioYouWin" preload="auto" src="audio/you-win.mp3"></audio>
+<audio id="audioYouLost" preload="auto" src="audio/you-lost-male.mp3"></audio>
+<audio id="audioNegative" preload="auto" src="audio/negative-beeps.mp3"></audio>
 <audio id="audioTimeOver" preload="auto" src="audio/time-over.mp3"></audio>
 <audio id="audioFinal" preload="auto" src="audio/failure.mp3"></audio>
 
@@ -775,13 +775,14 @@ function totalQuestionNumber() {
 
 function stopAllAudio(includeApplause = true) {
   const ids = [
-    "audioBingo",
     "audioVictory",
-    "audioChicken",
-    "audioTryAgain",
+    "audioYouWin",
+    "audioYouLost",
+    "audioNegative",
     "audioTimeOver",
     "audioFinal"
   ];
+
   if (includeApplause) ids.push("audioApplause");
 
   ids.forEach(id => {
@@ -805,11 +806,48 @@ function playSound(type) {
 
   stopAllAudio(false);
 
-  let id = "audioVictory";
-  if (type === "win-fast") id = "audioBingo";
-  else if (type === "chicken") id = "audioChicken";
-  else if (type === "lose") id = "audioTryAgain";
-  else if (type === "time-over") id = "audioTimeOver";
+  if (type === "win") {
+    const a1 = document.getElementById("audioVictory");
+    const a2 = document.getElementById("audioYouWin");
+
+    if (a1) {
+      a1.currentTime = 0;
+      const p1 = a1.play();
+      if (p1 && typeof p1.catch === "function") p1.catch(() => {});
+    }
+
+    if (a2) {
+      a2.currentTime = 0;
+      setTimeout(() => {
+        const p2 = a2.play();
+        if (p2 && typeof p2.catch === "function") p2.catch(() => {});
+      }, 250);
+    }
+    return;
+  }
+
+  if (type === "lose") {
+    const a1 = document.getElementById("audioYouLost");
+    const a2 = document.getElementById("audioNegative");
+
+    if (a1) {
+      a1.currentTime = 0;
+      const p1 = a1.play();
+      if (p1 && typeof p1.catch === "function") p1.catch(() => {});
+    }
+
+    if (a2) {
+      a2.currentTime = 0;
+      setTimeout(() => {
+        const p2 = a2.play();
+        if (p2 && typeof p2.catch === "function") p2.catch(() => {});
+      }, 250);
+    }
+    return;
+  }
+
+  let id = "audioTimeOver";
+  if (type === "time-over") id = "audioTimeOver";
   else if (type === "final") id = "audioFinal";
 
   const a = document.getElementById(id);
@@ -1033,14 +1071,11 @@ function revealRound() {
   board2.reveal(correctText, r2);
 
   const chosenSound =
-    (board1.selectedIndex === null && board2.selectedIndex === null)
-      ? "time-over"
-      : (board1.selectedCorrect && board2.selectedCorrect)
-        ? (r1.en.includes("BINGO") || r2.en.includes("BINGO") ? "win-fast" : "win")
-        : (!board1.selectedCorrect && !board2.selectedCorrect)
-          ? "lose"
-          : ((r1.en.includes("BINGO") || r2.en.includes("BINGO")) ? "win-fast" :
-             (r1.en.includes("CHICKEN") || r2.en.includes("CHICKEN")) ? "chicken" : "win");
+  (board1.selectedIndex === null && board2.selectedIndex === null)
+    ? "time-over"
+    : (board1.selectedCorrect || board2.selectedCorrect)
+      ? "win"
+      : "lose";
 
   playSound(chosenSound);
 
