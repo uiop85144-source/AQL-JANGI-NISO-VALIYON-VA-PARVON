@@ -807,42 +807,20 @@ function playSound(type) {
   stopAllAudio(false);
 
   if (type === "win") {
-    const a1 = document.getElementById("audioVictory");
-    const a2 = document.getElementById("audioYouWin");
-
-    if (a1) {
-      a1.currentTime = 0;
-      const p1 = a1.play();
-      if (p1 && typeof p1.catch === "function") p1.catch(() => {});
-    }
-
-    if (a2) {
-      a2.currentTime = 0;
-      setTimeout(() => {
-        const p2 = a2.play();
-        if (p2 && typeof p2.catch === "function") p2.catch(() => {});
-      }, 250);
-    }
+    const a = document.getElementById("audioVictory"); // xohlasangiz audioYouWin ga almashtiring
+    if (!a) return;
+    a.currentTime = 0;
+    const p = a.play();
+    if (p && typeof p.catch === "function") p.catch(() => {});
     return;
   }
 
   if (type === "lose") {
-    const a1 = document.getElementById("audioYouLost");
-    const a2 = document.getElementById("audioNegative");
-
-    if (a1) {
-      a1.currentTime = 0;
-      const p1 = a1.play();
-      if (p1 && typeof p1.catch === "function") p1.catch(() => {});
-    }
-
-    if (a2) {
-      a2.currentTime = 0;
-      setTimeout(() => {
-        const p2 = a2.play();
-        if (p2 && typeof p2.catch === "function") p2.catch(() => {});
-      }, 250);
-    }
+    const a = document.getElementById("audioYouLost"); // xohlasangiz audioNegative ga almashtiring
+    if (!a) return;
+    a.currentTime = 0;
+    const p = a.play();
+    if (p && typeof p.catch === "function") p.catch(() => {});
     return;
   }
 
@@ -856,7 +834,6 @@ function playSound(type) {
   const p = a.play();
   if (p && typeof p.catch === "function") p.catch(() => {});
 }
-
 function updateRoundTimer() {
   document.getElementById("roundTimer").textContent = String(state.roundTime).padStart(2, "0");
 }
@@ -1073,9 +1050,11 @@ function revealRound() {
   const chosenSound =
   (board1.selectedIndex === null && board2.selectedIndex === null)
     ? "time-over"
-    : (board1.selectedCorrect || board2.selectedCorrect)
-      ? "win"
-      : "lose";
+    : (board1.selectedCorrect && board2.selectedCorrect)
+      ? "win-double"
+      : (board1.selectedCorrect || board2.selectedCorrect)
+        ? "win"
+        : "lose";
 
   playSound(chosenSound);
 
