@@ -14,7 +14,7 @@ O'yin ikki jamoa uchun mo'ljallangan bo'lib, o'quvchilar strategik fikrlash orqa
 
 O'yin quyidagi tamoyil asosida ishlaydi:
 - 2 ta jamoa bir vaqtning o'zida o'ynaydi
-- har savolga **30 soniya** vaqt beriladi
+- har savolga **5-30 soniya** vaqt beriladi
 - o'yin umumiy **10 daqiqa** davom etadi
 - jami **20 ta savol** mavjud
 - maksimal natija **10 ball**
