@@ -1,4 +1,4 @@
-# JALOLADDING AQL JANGI: NISO, VALIYON VA PARVON Strategiya O'yini
+# AQL JANGI: NISO, VALIYON VA PARVON Strategiya O'yini
 
 Bu loyiha maktab tarix darslari uchun yaratilgan interaktiv o'yin hisoblanadi.  
 O'yin Jaloliddin Manguberdining 1221-yildagi uch muhim jangiga asoslangan:
